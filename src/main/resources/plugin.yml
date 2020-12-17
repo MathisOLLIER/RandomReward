@@ -1,0 +1,10 @@
+name: RandomReward
+version: ${project.version}
+main: edencraft.plugin.randomreward.RandomReward
+api-version: 1.16
+authors: [ Archired_ ]
+description: Random reward for quests
+commands:
+  rewardviktor:
+    description: Diamond Pickaxe Looting 1,2 or 3 (randomly)
+    usage: /randomviktor
