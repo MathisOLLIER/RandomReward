@@ -7,4 +7,7 @@ description: Random reward for quests
 commands:
   rewardviktor:
     description: Diamond Pickaxe Looting 1,2 or 3 (randomly)
-    usage: /randomviktor
+    usage: /rewardviktor
+  rewardjaspl:
+    description: Diamond Sword Fire Aspect 1 or Sharpness 1 (randomly)
+    usage: /rewardjaspl
