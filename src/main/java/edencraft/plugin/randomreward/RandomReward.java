@@ -19,6 +19,7 @@ public final class RandomReward extends JavaPlugin {
     public void onEnable() {
         getCommand("rewardviktor").setExecutor(new RewardViktor(this));
         getCommand("rewardjaspl").setExecutor(new RewardJaslp(this));
+        getCommand("tradekey").setExecutor(new TradeKey(this));
     }
 
     @Override
