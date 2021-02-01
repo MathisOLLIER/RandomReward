@@ -11,3 +11,6 @@ commands:
   rewardjaspl:
     description: Diamond Sword Fire Aspect 1 or Sharpness 1 (randomly)
     usage: /rewardjaspl
+  tradekey:
+    description: TODO
+    usage: /tradekey

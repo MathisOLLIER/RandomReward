@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Random;
 
 public final class RandomReward extends JavaPlugin {
+    public static String edenCraftPrefix = ChatColor.LIGHT_PURPLE + "Eden" + ChatColor.YELLOW + "Craft" + ChatColor.WHITE + ChatColor.BOLD + " » " + ChatColor.RESET;
 
     @Override
     public void onEnable() {
