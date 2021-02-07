@@ -30,3 +30,16 @@ keyNamesOf :
   3: "§cT3"
 noKeyFoundInInventory: "§fTu n'as pas de"
 keyTraded: "§fTu as reçu 1 clé §4{keyBought} §fcontre {requiredKeyForTrade} clé(s) §4{keySold}"
+
+#Clé gagnées aléatoirement
+# Quêtes journalière : 1% chance de gagner une clé T2 en plus d'une clé T1
+# Quêtes journalière : 1% chance de gagner une clé T3 en plus d'une clé T2
+Random:
+  randomNumber: "100"
+  numberToReach:
+    T1: "50"
+    T2: "50"
+  key:
+    1: "T1"
+    2: "T2"
+    3: "T3"

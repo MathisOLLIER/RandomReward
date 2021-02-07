@@ -1,6 +1,5 @@
 package edencraft.plugin.randomreward;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,6 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.bukkit.enchantments.Enchantment.ARROW_INFINITE;
 
@@ -21,10 +21,16 @@ import static org.bukkit.enchantments.Enchantment.ARROW_INFINITE;
 public class TradeKey implements CommandExecutor {
     private RandomReward randomReward = RandomReward.randomRewardInstance;
     private final String defaultKey = ChatColor.WHITE + "Clé" + " " + ChatColor.GREEN + "Quête" + " ";
-    private final String keyT1 = randomReward.getConfig().getString("keyNamesOf.1");
-    private final String keyT2 = randomReward.getConfig().getString("keyNamesOf.2");
+    private final String keyT1Display = randomReward.getConfig().getString("keyNamesOf.1");
+    private final String keyT2Display = randomReward.getConfig().getString("keyNamesOf.2");
     private final String noKeyFound = randomReward.getConfig().getString("noKeyFoundInInventory");
     private final String keyTraded = randomReward.getConfig().getString("keyTraded");
+    private final String randomNumber = randomReward.getConfig().getString("Random.randomNumber");
+    private final String numberToReachT1 = randomReward.getConfig().getString("Random.numberToReach.T1");
+    private final String numberToReachT2 = randomReward.getConfig().getString("Random.numberToReach.T2");
+    private final String keyT2 = randomReward.getConfig().getString("Random.key.2");
+    private final String keyT3 = randomReward.getConfig().getString("Random.key.3");
+
     private final String edenCraftPrefix = RandomReward.edenCraftPrefix;
 
     @Override
@@ -38,14 +44,36 @@ public class TradeKey implements CommandExecutor {
                 if (sender.isOp() || sender instanceof ConsoleCommandSender) {
 
                     if (args[0].equalsIgnoreCase("T1")) {
-                        startTrade(player, "T1", "T2", defaultKey + keyT1, 15);
-                    } else if(args[0].equalsIgnoreCase("T2")) {
-                        startTrade(player, "T2", "T3", defaultKey + keyT2, 5);
+                        startTrade(player, "T1", "T2", defaultKey + keyT1Display, 15);
+                    } else if (args[0].equalsIgnoreCase("T2")) {
+                        startTrade(player, "T2", "T3", defaultKey + keyT2Display, 5);
                     }
-
                     return true;
                 }
                 return true;
+            }
+            return true;
+        }
+        if (args.length == 3){
+            if (isOnline(args[2])) {
+
+                Player player = Bukkit.getPlayer(args[2]);
+                assert player != null;
+
+                if (sender.isOp() || sender instanceof ConsoleCommandSender) {
+                    if (args[1].equalsIgnoreCase("random")){
+                        Random random = new Random();
+                        int getRandomNumber = random.nextInt(Integer.parseInt(randomNumber)) + 1;
+                        System.out.println(getRandomNumber);
+                        if (args[0].equalsIgnoreCase("T1") && getRandomNumber == Integer.parseInt(numberToReachT1)) {
+                            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+                            Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " Quête" + keyT2);
+                        } else if (args[0].equalsIgnoreCase("T2") && getRandomNumber == Integer.parseInt(numberToReachT2)) {
+                            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+                            Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " Quête" + keyT3);
+                        }
+                    }
+                }
             }
         }
         return true;
@@ -107,6 +135,8 @@ public class TradeKey implements CommandExecutor {
             }
         }
     }
+
+
 
     private boolean isOnline(String player) {
         for (Player p : Bukkit.getOnlinePlayers()) {
