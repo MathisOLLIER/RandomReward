@@ -5,6 +5,9 @@ api-version: 1.16
 authors: [ Archired_ ]
 description: Random reward for quests
 commands:
+  randomreward:
+    description: Use for reloading PL
+    usage: /randomreward
   rewardviktor:
     description: Diamond Pickaxe Looting 1,2 or 3 (randomly)
     usage: /rewardviktor

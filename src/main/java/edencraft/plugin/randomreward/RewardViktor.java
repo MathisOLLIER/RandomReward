@@ -11,18 +11,18 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class RewardViktor implements CommandExecutor {
-    private final RandomReward randomReward;
-
-    public RewardViktor(RandomReward randomReward) {
-        this.randomReward = randomReward;
-    }
+    private final RandomReward randomReward = RandomReward.randomRewardInstance;
+    private final String npcName = randomReward.getConfig().getString("Viktor.npcName");
+    private final String itemType = randomReward.getConfig().getString("Viktor.item.Material");
+    private final String enchantDisplay = randomReward.getConfig().getString("Viktor.item.enchantDisplay");
+    private final String itemDisplay = randomReward.getConfig().getString("Viktor.item.itemDisplay");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        System.out.println("test");
         if (args.length == 1) {
             if (isOnline(args[0])) {
                 Player player = Bukkit.getPlayer(args[0]);
@@ -31,12 +31,12 @@ public class RewardViktor implements CommandExecutor {
                     if (command.getName().equals("rewardviktor")) {
                         Random random = new Random();
                         int getRandomNumber = random.nextInt(3) + 1;
-                        ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE);
+                        ItemStack item = new ItemStack(Material.getMaterial(itemType));
                         item.addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, getRandomNumber);
                         player.getInventory().addItem(item);
-                        String nomNPC = ChatColor.BOLD + "Viktor ";
-                        String fortune = ChatColor.BOLD + "Fortune ";
-                        player.sendMessage(ChatColor.YELLOW + nomNPC + ChatColor.YELLOW + ": Tu as eu un pioche avec l'enchantement " + ChatColor.RED + fortune + ChatColor.BOLD + getRandomNumber + ChatColor.YELLOW + ", p'tit veinard...");
+                        String nomNPC = ChatColor.BOLD + npcName + " ";
+                        String fortune = ChatColor.BOLD + enchantDisplay + " ";
+                        player.sendMessage(ChatColor.YELLOW + nomNPC + ChatColor.YELLOW + ": Tu as eu " + itemDisplay + " avec l'enchantement " + ChatColor.RED + fortune + ChatColor.BOLD + getRandomNumber + ChatColor.YELLOW + ", p'tit veinard...");
                     }
                     return true;
                 }

@@ -1,5 +1,6 @@
 package edencraft.plugin.randomreward;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,29 +19,28 @@ import static org.bukkit.enchantments.Enchantment.ARROW_INFINITE;
 
 
 public class TradeKey implements CommandExecutor {
-    private final RandomReward randomReward;
-    private String key = ChatColor.WHITE + "Clé" + " " + ChatColor.GREEN + "Quête" + " " + ChatColor.GREEN + "T1";
-    private String edenCraftPrefix = RandomReward.edenCraftPrefix;
-
-    public TradeKey (RandomReward randomReward) {
-        this.randomReward = randomReward;
-    }
+    private RandomReward randomReward = RandomReward.randomRewardInstance;
+    private final String defaultKey = ChatColor.WHITE + "Clé" + " " + ChatColor.GREEN + "Quête" + " ";
+    private final String keyT1 = randomReward.getConfig().getString("keyNamesOf.1");
+    private final String keyT2 = randomReward.getConfig().getString("keyNamesOf.2");
+    private final String noKeyFound = randomReward.getConfig().getString("noKeyFoundInInventory");
+    private final String keyTraded = randomReward.getConfig().getString("keyTraded");
+    private final String edenCraftPrefix = RandomReward.edenCraftPrefix;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         if (args.length == 2) {
-            if (isOnline(args[0])) {
+            if (isOnline(args[1])) {
 
-                Player player = Bukkit.getPlayer(args[0]);
+                Player player = Bukkit.getPlayer(args[1]);
                 assert player != null;
 
                 if (sender.isOp() || sender instanceof ConsoleCommandSender) {
 
-                    if (args[1].equalsIgnoreCase("T1")) {
-                        startTrade(player, "T1", "T2", 15);
-                    } else if(args[1].equalsIgnoreCase("T2")) {
-                        startTrade(player, "T2", "T3", 5);
+                    if (args[0].equalsIgnoreCase("T1")) {
+                        startTrade(player, "T1", "T2", defaultKey + keyT1, 15);
+                    } else if(args[0].equalsIgnoreCase("T2")) {
+                        startTrade(player, "T2", "T3", defaultKey + keyT2, 5);
                     }
 
                     return true;
@@ -51,7 +51,7 @@ public class TradeKey implements CommandExecutor {
         return true;
     }
 
-    private void startTrade(Player player, String keySold, String keyBought, int requiredKeyForTrade) {
+    private void startTrade(Player player, String keySold, String keyBought, String keyToTrade, int requiredKeyForTrade) {
         PlayerInventory inventory = player.getInventory();
 
         if (!inventory.isEmpty()){
@@ -62,7 +62,7 @@ public class TradeKey implements CommandExecutor {
 
             for(ItemStack item : inventory) {
                 if(item != null && item.getItemMeta() != null) {
-                    if(item.getItemMeta().getDisplayName().equals(key)
+                    if(item.getItemMeta().getDisplayName().equals(keyToTrade)
                             && item.getType().equals(Material.TRIPWIRE_HOOK)
                             && item.containsEnchantment(ARROW_INFINITE)
                             && item.getEnchantmentLevel(ARROW_INFINITE) == 10){
@@ -77,30 +77,33 @@ public class TradeKey implements CommandExecutor {
                     RemoveKey(player, itemsToBeRemove, requiredKeyForTrade);
                     ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
                     Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " Quête" + keyBought);
-                    player.sendMessage(edenCraftPrefix + "Tu as reçu 1 clé " + keyBought + " contre " + requiredKeyForTrade + " clé(s) " + keySold);
+                    assert keyTraded != null;
+                    player.sendMessage(edenCraftPrefix + keyTraded
+                            .replace("{keyBought}", keyBought)
+                            .replace("{requiredKeyForTrade}", String.valueOf(requiredKeyForTrade))
+                            .replace("{keySold}", keySold));
                 } else {
-                    player.sendMessage(edenCraftPrefix + "Tu n'as pas assez de clé quête" + keySold);
+                    player.sendMessage(String.format("&4%s Il te manques %s %s", edenCraftPrefix, requiredKeyForTrade - keyCounter, keyToTrade));
                 }
             } else {
-                player.sendMessage(edenCraftPrefix + "Tu n'as pas de clé quête");
+                player.sendMessage(edenCraftPrefix + noKeyFound + " " + keyToTrade);
             }
         } else {
-            player.sendMessage(edenCraftPrefix + "Ton inventaire est vide, tu n'as pas de clé quête");
+            player.sendMessage(edenCraftPrefix + noKeyFound + " " + keyToTrade);
         }
     }
 
     private void RemoveKey(Player player, List<ItemStack> itemsToBeRemove, int requiredItemToRemove) {
         for (ItemStack item : itemsToBeRemove) {
-            if (requiredItemToRemove > 0) {
-                if (item.getAmount() <= requiredItemToRemove) {
-                    requiredItemToRemove -= item.getAmount();
-                    player.getInventory().removeItem(item);
-                } else {
-                    item.setAmount(item.getAmount() - requiredItemToRemove);
-                    requiredItemToRemove -= item.getAmount() - requiredItemToRemove;
-                }
-            } else {
+            if (requiredItemToRemove < 0) {
                 break;
+            }
+            if (item.getAmount() <= requiredItemToRemove) {
+                requiredItemToRemove -= item.getAmount();
+                player.getInventory().removeItem(item);
+            } else {
+                item.setAmount(item.getAmount() - requiredItemToRemove);
+                requiredItemToRemove -= item.getAmount() - requiredItemToRemove;
             }
         }
     }

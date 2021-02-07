@@ -15,11 +15,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Random;
 
 public class RewardJaslp implements CommandExecutor {
-    private final RandomReward randomReward;
-
-    public RewardJaslp(RandomReward randomReward) {
-        this.randomReward = randomReward;
-    }
+    private final RandomReward randomReward = RandomReward.randomRewardInstance;
+    private final String npcName = randomReward.getConfig().getString("Jaspl.npcName");
+    private final String item1Type = randomReward.getConfig().getString("Jaspl.item1.Material");
+    private final String item2Type = randomReward.getConfig().getString("Jaspl.item2.Material");
+    private final String itemName1 = randomReward.getConfig().getString("Jaspl.item1.itemDisplay");
+    private final String itemName2 = randomReward.getConfig().getString("Jaspl.item2.itemDisplay");
+    private final String enchant1 = randomReward.getConfig().getString("Jaspl.item1.enchant");
+    private final String enchant2 = randomReward.getConfig().getString("Jaspl.item2.enchant");
+    private final String level1 = randomReward.getConfig().getString("Jaspl.item1.level");
+    private final String level2 = randomReward.getConfig().getString("Jaspl.item2.level");
+    private final String enchant1Display = randomReward.getConfig().getString("Jaspl.item1.enchantDisplay");
+    private final String enchant2Display = randomReward.getConfig().getString("Jaspl.item2.enchantDisplay");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -32,21 +39,21 @@ public class RewardJaslp implements CommandExecutor {
                         Random random = new Random();
                         int getRandomNumber = random.nextInt(2) + 1;
 
-                        ItemStack item1 = new ItemStack(Material.DIAMOND_SWORD);
-                        item1.addEnchantment(Enchantment.FIRE_ASPECT, 1);
-                        ItemStack item2 = new ItemStack(Material.DIAMOND_SWORD);
-                        item2.addEnchantment(Enchantment.DAMAGE_ALL, 2);
+                        ItemStack item1 = new ItemStack(Material.getMaterial(item1Type));
+                        item1.addEnchantment(Enchantment.getByName(enchant1), Integer.valueOf(level1));
+                        ItemStack item2 = new ItemStack(Material.getMaterial(item2Type));
+                        item2.addEnchantment(Enchantment.getByName(enchant2), Integer.valueOf(level2));
 
-                        String nomNPC = ChatColor.BOLD + "Jaspl ";
-                        String fire = ChatColor.BOLD + "Aura de Feu ";
-                        String tranchant = ChatColor.BOLD + "Tranchant ";
+                        String nomNPC = ChatColor.BOLD + npcName + " ";
+                        String fire = ChatColor.BOLD + enchant1Display + " ";
+                        String tranchant = ChatColor.BOLD + enchant2Display + " ";
 
                         if (getRandomNumber == 1){
                             player.getInventory().addItem(item1);
-                            player.sendMessage(ChatColor.YELLOW + nomNPC + ChatColor.YELLOW + ": Tu as eu un épée avec l'enchantement " + ChatColor.RED + fire + ChatColor.BOLD + getRandomNumber + ChatColor.YELLOW + ", tu en as de la chance !");
+                            player.sendMessage(ChatColor.YELLOW + nomNPC + ChatColor.YELLOW + ": Tu as eu " + itemName1 + " avec l'enchantement " + ChatColor.RED + fire + ChatColor.BOLD + getRandomNumber + ChatColor.YELLOW + ", tu en as de la chance !");
                         }else {
                             player.getInventory().addItem(item2);
-                            player.sendMessage(ChatColor.YELLOW + nomNPC + ChatColor.YELLOW + ": Tu as eu un pioche avec l'enchantement " + ChatColor.RED + tranchant + ChatColor.BOLD + getRandomNumber + ChatColor.YELLOW + ", tu en as de la chance !");
+                            player.sendMessage(ChatColor.YELLOW + nomNPC + ChatColor.YELLOW + ": Tu as eu " + itemName2 + " avec l'enchantement " + ChatColor.RED + tranchant + ChatColor.BOLD + getRandomNumber + ChatColor.YELLOW + ", tu en as de la chance !");
                         }
                     }
                     return true;

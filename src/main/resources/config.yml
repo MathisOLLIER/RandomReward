@@ -1,0 +1,32 @@
+#REWARD JASLP
+Jaspl:
+  npcName: "Jaspl"
+  item1:
+    Material: "DIAMOND_SWORD"
+    itemDisplay: "une epée"
+    enchant: "FIRE_ASPECT"
+    level: "1"
+    enchantDisplay: "Aura de Feu"
+  item2:
+    Material: "DIAMOND_SWORD"
+    itemDisplay : "une epée"
+    enchant: "DAMAGE_ALL"
+    level: "2"
+    enchantDisplay: "Tranchant"
+
+#REWARD VIKTOR
+Viktor:
+  npcName: "Viktor"
+  item:
+    Material: "DIAMOND_PICKAXE"
+    itemDisplay: "une pioche"
+    enchant: "LOOT_BONUS_BLOCKS"
+    enchantDisplay: "Fortune"
+
+#TRADE KEY
+keyNamesOf :
+  1: "§aT1"
+  2: "§bT2"
+  3: "§cT3"
+noKeyFoundInInventory: "§fTu n'as pas de"
+keyTraded: "§fTu as reçu 1 clé §4{keyBought} §fcontre {requiredKeyForTrade} clé(s) §4{keySold}"
