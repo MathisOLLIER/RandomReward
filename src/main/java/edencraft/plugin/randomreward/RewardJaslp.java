@@ -16,17 +16,17 @@ import java.util.Random;
 
 public class RewardJaslp implements CommandExecutor {
     private final RandomReward randomReward = RandomReward.randomRewardInstance;
-    private final String npcName = randomReward.getConfig().getString("Jaspl.npcName");
-    private final String item1Type = randomReward.getConfig().getString("Jaspl.item1.Material");
-    private final String item2Type = randomReward.getConfig().getString("Jaspl.item2.Material");
-    private final String itemName1 = randomReward.getConfig().getString("Jaspl.item1.itemDisplay");
-    private final String itemName2 = randomReward.getConfig().getString("Jaspl.item2.itemDisplay");
-    private final String enchant1 = randomReward.getConfig().getString("Jaspl.item1.enchant");
-    private final String enchant2 = randomReward.getConfig().getString("Jaspl.item2.enchant");
-    private final String level1 = randomReward.getConfig().getString("Jaspl.item1.level");
-    private final String level2 = randomReward.getConfig().getString("Jaspl.item2.level");
-    private final String enchant1Display = randomReward.getConfig().getString("Jaspl.item1.enchantDisplay");
-    private final String enchant2Display = randomReward.getConfig().getString("Jaspl.item2.enchantDisplay");
+    private final String npcName = randomReward.getConfig().getString("jaspl.npcName");
+    private final String item1Type = randomReward.getConfig().getString("jaspl.item1.material");
+    private final String item2Type = randomReward.getConfig().getString("jaspl.item2.material");
+    private final String itemName1 = randomReward.getConfig().getString("jaspl.item1.itemDisplay");
+    private final String itemName2 = randomReward.getConfig().getString("jaspl.item2.itemDisplay");
+    private final String enchant1 = randomReward.getConfig().getString("jaspl.item1.enchant");
+    private final String enchant2 = randomReward.getConfig().getString("jaspl.item2.enchant");
+    private final String level1 = randomReward.getConfig().getString("jaspl.item1.level");
+    private final String level2 = randomReward.getConfig().getString("jaspl.item2.level");
+    private final String enchant1Display = randomReward.getConfig().getString("jaspl.item1.enchantDisplay");
+    private final String enchant2Display = randomReward.getConfig().getString("jaspl.item2.enchantDisplay");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

@@ -23,13 +23,14 @@ public class TradeKey implements CommandExecutor {
     private final String defaultKey = ChatColor.WHITE + "Clé" + " " + ChatColor.GREEN + "Quête" + " ";
     private final String keyT1Display = randomReward.getConfig().getString("keyNamesOf.1");
     private final String keyT2Display = randomReward.getConfig().getString("keyNamesOf.2");
+    private final String keyT3Display = randomReward.getConfig().getString("keyNamesOf.3");
     private final String noKeyFound = randomReward.getConfig().getString("noKeyFoundInInventory");
     private final String keyTraded = randomReward.getConfig().getString("keyTraded");
-    private final String randomNumber = randomReward.getConfig().getString("Random.randomNumber");
-    private final String numberToReachT1 = randomReward.getConfig().getString("Random.numberToReach.T1");
-    private final String numberToReachT2 = randomReward.getConfig().getString("Random.numberToReach.T2");
-    private final String keyT2 = randomReward.getConfig().getString("Random.key.2");
-    private final String keyT3 = randomReward.getConfig().getString("Random.key.3");
+    private final String randomNumber = randomReward.getConfig().getString("random.randomNumber");
+    private final String numberToReachT1 = randomReward.getConfig().getString("random.numberToReach.t1");
+    private final String numberToReachT2 = randomReward.getConfig().getString("random.numberToReach.t2");
+    private final String keyT2 = randomReward.getConfig().getString("random.key.2");
+    private final String keyT3 = randomReward.getConfig().getString("random.key.3");
 
     private final String edenCraftPrefix = RandomReward.edenCraftPrefix;
 
@@ -67,10 +68,10 @@ public class TradeKey implements CommandExecutor {
                         System.out.println(getRandomNumber);
                         if (args[0].equalsIgnoreCase("T1") && getRandomNumber == Integer.parseInt(numberToReachT1)) {
                             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                            Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " Quête" + keyT2);
+                            Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " QuêteBox_" + keyT2);
                         } else if (args[0].equalsIgnoreCase("T2") && getRandomNumber == Integer.parseInt(numberToReachT2)) {
                             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                            Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " Quête" + keyT3);
+                            Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " QuêteBox_" + keyT3);
                         }
                     }
                 }
@@ -104,12 +105,19 @@ public class TradeKey implements CommandExecutor {
                 if(keyCounter >= requiredKeyForTrade) {
                     RemoveKey(player, itemsToBeRemove, requiredKeyForTrade);
                     ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                    Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " Quête" + keyBought);
+                    Bukkit.dispatchCommand(console, "cr give to " + player.getName() + " QuêteBox_" + keyBought);
                     assert keyTraded != null;
-                    player.sendMessage(edenCraftPrefix + keyTraded
-                            .replace("{keyBought}", keyBought)
-                            .replace("{requiredKeyForTrade}", String.valueOf(requiredKeyForTrade))
-                            .replace("{keySold}", keySold));
+                    if (keyBought == "T2"){
+                        player.sendMessage(edenCraftPrefix + keyTraded
+                                .replace("{keyBought}", keyT1Display)
+                                .replace("{requiredKeyForTrade}", String.valueOf(requiredKeyForTrade))
+                                .replace("{keySold}", keyT2Display));
+                    }else if (keyBought == "T3"){
+                        player.sendMessage(edenCraftPrefix + keyTraded
+                                .replace("{keyBought}", keyT2Display)
+                                .replace("{requiredKeyForTrade}", String.valueOf(requiredKeyForTrade))
+                                .replace("{keySold}", keyT3Display));
+                    }
                 } else {
                     player.sendMessage(String.format("&4%s Il te manques %s %s", edenCraftPrefix, requiredKeyForTrade - keyCounter, keyToTrade));
                 }

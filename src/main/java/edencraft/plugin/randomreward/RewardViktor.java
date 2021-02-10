@@ -16,10 +16,10 @@ import java.util.Random;
 
 public class RewardViktor implements CommandExecutor {
     private final RandomReward randomReward = RandomReward.randomRewardInstance;
-    private final String npcName = randomReward.getConfig().getString("Viktor.npcName");
-    private final String itemType = randomReward.getConfig().getString("Viktor.item.Material");
-    private final String enchantDisplay = randomReward.getConfig().getString("Viktor.item.enchantDisplay");
-    private final String itemDisplay = randomReward.getConfig().getString("Viktor.item.itemDisplay");
+    private final String npcName = randomReward.getConfig().getString("viktor.npcName");
+    private final String itemType = randomReward.getConfig().getString("viktor.item.material");
+    private final String enchantDisplay = randomReward.getConfig().getString("viktor.item.enchantDisplay");
+    private final String itemDisplay = randomReward.getConfig().getString("viktor.item.itemDisplay");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

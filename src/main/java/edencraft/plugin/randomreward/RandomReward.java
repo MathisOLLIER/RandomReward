@@ -6,11 +6,14 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Random;
 
 public final class RandomReward extends JavaPlugin {
@@ -32,7 +35,7 @@ public final class RandomReward extends JavaPlugin {
         if (args.length == 1){
             if(args[0].equalsIgnoreCase("reload")){
                 this.reloadConfig();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aTradeKey Reloaded"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aRandomReward Reloaded"));
             }
         }
         return true;

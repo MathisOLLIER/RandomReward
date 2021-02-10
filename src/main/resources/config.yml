@@ -1,24 +1,24 @@
 #REWARD JASLP
-Jaspl:
+jaspl:
   npcName: "Jaspl"
   item1:
-    Material: "DIAMOND_SWORD"
+    material: "DIAMOND_SWORD"
     itemDisplay: "une epée"
     enchant: "FIRE_ASPECT"
     level: "1"
     enchantDisplay: "Aura de Feu"
   item2:
-    Material: "DIAMOND_SWORD"
+    material: "DIAMOND_SWORD"
     itemDisplay : "une epée"
     enchant: "DAMAGE_ALL"
     level: "2"
     enchantDisplay: "Tranchant"
 
 #REWARD VIKTOR
-Viktor:
+viktor:
   npcName: "Viktor"
   item:
-    Material: "DIAMOND_PICKAXE"
+    material: "DIAMOND_PICKAXE"
     itemDisplay: "une pioche"
     enchant: "LOOT_BONUS_BLOCKS"
     enchantDisplay: "Fortune"
@@ -29,16 +29,16 @@ keyNamesOf :
   2: "§bT2"
   3: "§cT3"
 noKeyFoundInInventory: "§fTu n'as pas de"
-keyTraded: "§fTu as reçu 1 clé §4{keyBought} §fcontre {requiredKeyForTrade} clé(s) §4{keySold}"
+keyTraded: "§fTu as reçu 1 Clé §aQuête {keyBought} §fcontre {requiredKeyForTrade} Clé §aQuête {keySold}"
 
 #Clé gagnées aléatoirement
 # Quêtes journalière : 1% chance de gagner une clé T2 en plus d'une clé T1
-# Quêtes journalière : 1% chance de gagner une clé T3 en plus d'une clé T2
-Random:
+# Quêtes hebdmadaire : 1% chance de gagner une clé T3 en plus d'une clé T2
+random:
   randomNumber: "100"
   numberToReach:
-    T1: "50"
-    T2: "50"
+    t1: "50"
+    t2: "50"
   key:
     1: "T1"
     2: "T2"
