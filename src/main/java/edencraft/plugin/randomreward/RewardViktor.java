@@ -1,5 +1,6 @@
 package edencraft.plugin.randomreward;
 
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,7 +12,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class RewardViktor implements CommandExecutor {
